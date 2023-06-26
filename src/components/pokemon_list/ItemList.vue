@@ -4,7 +4,7 @@
     class="border"
     type="image,list-item-two-line,chip"
   >
-    <v-card class="w-100 item-list">
+    <v-card class="w-100 item-list" @click="goToDetails(pokemon.id)">
       <v-img
         height="200"
         class="bg-blue-grey-lighten-5"
@@ -37,8 +37,21 @@
 </template>
 
 <script>
+import { useRouter } from 'vue-router'
+
 export default {
-  props: ['pokemon']
+  props: ['pokemon'],
+  setup() {
+    const router = useRouter()
+
+    function goToDetails(id) {
+      router.push({ name: 'details', params: { id: id } })
+    }
+
+    return {
+      goToDetails
+    }
+  }
 }
 </script>
 

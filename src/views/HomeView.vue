@@ -83,7 +83,7 @@
 import ItemList from '@/components/pokemon_list/ItemList.vue'
 import axios from 'axios'
 import { ref, watch, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
   name: 'HomeView',
@@ -95,6 +95,7 @@ export default {
     const pokemonList = ref([])
     const filteredData = ref([])
     const totalData = ref([])
+    const route = useRoute()
     const router = useRouter()
     const search = ref('')
     const openFilter = ref(false)
@@ -103,20 +104,20 @@ export default {
     const expFilter = ref([20, 390])
     const searchInput = ref(null)
 
-    const page = ref(
-      router.currentRoute.value.query.page ? Number(router.currentRoute.value.query.page) : 1
-    )
+    const page = ref(route.query.page ? Number(route.query.page) : 1)
 
-    window.addEventListener('click', function (e) {
-      if (document.getElementById('filter-box').contains(e.target)) {
-        // Clicked in box
-        searchInput.value.focus()
-      } else {
-        // Clicked outside the box
-        if (!searchInput.value.active) {
-          openFilter.value = false
+    onMounted(() => {
+      window.addEventListener('click', function (e) {
+        if (document.getElementById('filter-box').contains(e.target)) {
+          // Clicked in box
+          searchInput.value.focus()
+        } else {
+          // Clicked outside the box
+          if (!searchInput.value.active) {
+            openFilter.value = false
+          }
         }
-      }
+      })
     })
 
     axios.get('https://pokeapi.co/api/v2/type').then((response) => {
@@ -147,7 +148,7 @@ export default {
     }
     watch(
       () => [search.value, typeFilter.value, expFilter.value],
-      async (newFilter, filter) => {
+      async (newFilter) => {
         let result = []
         console.log(newFilter)
         if (newFilter[1]) {
@@ -181,16 +182,6 @@ export default {
               item.details.base_experience <= newFilter[2][1]
           )
         }
-        // if (filter[2] !== newFilter[2]) {
-        //   filteredData.value = filteredData.value.map((item) => {
-        //     return (
-        //       item.details.base_experience >= newFilter[2][0] &&
-        //       item.details.base_experience <= newFilter[2][1]
-        //     )
-        //   })
-        // } else {
-        //   filteredData.value = totalData.value
-        // }
 
         page.value = 1
         onChangePage()

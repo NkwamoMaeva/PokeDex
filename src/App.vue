@@ -1,12 +1,14 @@
 <template>
   <v-app>
     <v-toolbar class="white" color="white" density="comfortable">
-      <v-toolbar-title>
-        <div class="d-flex flex-row align-center">
-          <v-icon size="large" class="mx-2" color="red-darken-1">mdi-pokeball</v-icon>
-          <strong> <strong class="text-red-darken-1">Poke</strong>Dex </strong>
-        </div>
-      </v-toolbar-title>
+      <a href="/" class="text-decoration-none">
+        <v-toolbar-title>
+          <div class="d-flex flex-row align-center">
+            <v-icon size="large" class="mx-2" color="red-darken-1">mdi-pokeball</v-icon>
+            <strong> <strong class="text-red-darken-1">Poke</strong>Dex </strong>
+          </div>
+        </v-toolbar-title>
+      </a>
 
       <v-spacer></v-spacer>
       <v-btn icon>
