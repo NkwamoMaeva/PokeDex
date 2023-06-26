@@ -18,12 +18,15 @@
       </v-img>
 
       <v-card-item>
-        <span class="me-1 text-caption">#{{ pokemon.id }}</span>
+        <div class="d-flex flex-row justify-space-between">
+          <h6 class="me-1">#{{ pokemon.id }}</h6>
+          <h6 class="me-1">Exp: {{ pokemon.base_experience }}</h6>
+        </div>
 
         <v-card-title>{{ pokemon.name }}</v-card-title>
         <div>
           <v-chip-group>
-            <v-chip size="small" v-for="(type, index) in pokemon.types" :key="index">{{
+            <v-chip size="x-small" v-for="(type, index) in pokemon.types" :key="index">{{
               type.type.name
             }}</v-chip>
           </v-chip-group>
@@ -34,34 +37,8 @@
 </template>
 
 <script>
-import { ref, watch } from 'vue'
-
 export default {
-  props: ['pokemonUrl'],
-  setup(props) {
-    const pokemon = ref({})
-
-    fetchData(props.pokemonUrl)
-    watch(
-      () => props.pokemonUrl,
-      (url) => {
-        fetchData(url)
-      }
-    )
-
-    async function fetchData(url) {
-      try {
-        const res = await fetch(url)
-        pokemon.value = await res.json()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    return {
-      pokemon,
-      fetchData
-    }
-  }
+  props: ['pokemon']
 }
 </script>
 

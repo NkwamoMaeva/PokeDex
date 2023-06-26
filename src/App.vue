@@ -28,10 +28,13 @@ export default {
   })
 }
 </script>
-<style scoped>
+<style>
 header {
   position: sticky;
   z-index: 1;
   top: 0;
+}
+* {
+  font-family: 'Press Start 2P' !important;
 }
 </style>
